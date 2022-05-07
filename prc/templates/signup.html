@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}
+Sign Up
+{% endblock %}
+
+
+
+{% block content %}
+<div class="content">
+{% if message %}
+    {{ message }}
+{% endif %}
+
+{% if form %}
+<div class="center">
+    <h1>Signup</h1>
+    {% if form.full_name.errors %}
+        <ul>
+            {% for error in form.errors %}
+                <li id="error">{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    
+    <div class="container">
+    <form action="{{url_for('signup')}}" method="POST">
+        <dev class="text_field">
+            {{ form.full_name }}
+            <span></span>
+            {{ form.full_name.label }}
+        </dev>
+  
+        <dev class="text_field">
+            {{ form.email }}
+            <span></span>
+            {{ form.email.label }}
+        </dev>
+
+        <dev class="text_field">
+            {{ form.password }}
+            <span></span>
+            {{ form.password.label }}
+        </dev>
+
+        <dev class="text_field">
+            {{ form.confirm_password }}
+            <span></span>
+            {{ form.confirm_password.label }}
+        </dev>
+        {{ form.csrf_token }}
+        {{ form.submit }}
+        <div class="signup_link">
+            Already a member? <a href="{{url_for('login')}}">Log in</a>
+        </div>
+    </form>
+    </div>
+</div>
+{% endif %}
+</div>
+{% endblock %}

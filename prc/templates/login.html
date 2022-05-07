@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+<!-- {% block style %}
+    <link rel = "stylesheet" href = "{{url_for('static', filename = 'logsign.css')}}">
+{% endblock %} -->
+
+{% block title %}
+    LogIn
+{% endblock %}
+
+{% block content %}
+<div class="content">
+{% if message %}
+    {{message}}
+{% endif %}
+
+{% if form %}
+
+<div class="center">
+    <h1>Login</h1>
+    
+    {% if form.errors%}<br>
+        <div class="error">
+            <ul>
+                {% for error in form.errors %}
+                    <li id="error">{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    
+    <form action="{{url_for('login')}}" method="POST">
+        <div class="text_field">
+            
+            {{ form.email }}
+            <span></span>
+            {{ form.email.label }}
+        </div>
+        <div class="text_field">
+            {{ form.password }} 
+            <span></span>
+            {{ form.password.label }}
+        </div>
+       
+        {{ form.csrf_token }}
+        {{ form.submit }}
+        
+        <div class="signup_link">
+            Not a member? <a href="{{url_for('signup')}}">Sign Up</a>
+        </div>
+    </form>
+</div>
+
+{% endif %}
+
+</div>
+{% endblock %}

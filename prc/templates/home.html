@@ -1,0 +1,55 @@
+
+
+{% extends "base.html" %}
+
+{% block title %}
+  {% if 'user' in session %}
+    {{session['full_name']}}
+  {% else %}
+    HomePage
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+  <h1 id = "title"><center>Paws Rescue Center 🐾</center></h1>
+  {% if 'user' in session %}
+  <a href="{{url_for('addPet')}}">Add a pet</a>
+  {% endif %}
+  <table>
+    <tr>
+      <th>Image</th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Bio</th>
+      <th>posted_by</th>
+      <th>Adopted_by</th>
+    </tr>
+    {% for pet in pets %}
+      
+      <tr>
+
+        {% if pet.pet_pic != None %}
+        <td><a href="{{url_for('pet_details',pet_id = pet.id)}}"><img height="100" src="{{url_for('static', filename = 'images/'+pet.pet_pic)}}"></a></td>
+          {% else %}
+        <td><a href="{{url_for('pet_details',pet_id = pet.id)}}"><img height="100" src="{{url_for('static', filename = 'images/default.png')}}"></a></td>
+            {% endif %}
+        
+        <td>{{pet['name']}}</td>
+        <td>{{pet['age']}}</td>
+        <td>{{pet['bio']}}</td>
+        <td>{% if pet.posted_by_id == None %}
+              Admin
+            {% else %}
+              {{pet.poster.full_name}}
+            {% endif %}
+        </td>
+        <td>{% if pet.adopted_by_id == None %}
+          <a href="{{url_for('adopt',pet_id = pet.id)}}"> adopt</a>
+        {% endif %}
+    </td>
+      </tr>
+    
+    {% endfor %}
+  </table>
+{% endblock %}

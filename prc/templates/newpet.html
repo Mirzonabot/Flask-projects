@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+Add new Pet
+{% endblock %}
+
+{% block content %}
+<form action="{{url_for('addPet')}}" method="POST" style="padding:5px;" enctype="multipart/form-data">
+    {{ form.name.label }}: <br>
+    {{ form.name}} 
+    <br>
+    {{ form.age.label }}: <br>
+    {{ form.age}} 
+    <br>
+    {{ form.bio.label }}: <br>
+    {{ form.bio}} 
+    <br>
+    {{ form.pet_pic.label }}: <br>
+    {{ form.pet_pic}} 
+    <br>
+    {{ form.csrf_token }}
+    {{ form.submit }}
+</form>
+{% endblock %}

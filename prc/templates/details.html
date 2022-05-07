@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}
+Details
+{% endblock %}
+
+
+{% block content %}
+
+<body style="margin:2%"> 
+    <div style="float:left; border-style:double;">
+        {% if pet.pet_pic != None %}
+            <img height="100" src="{{url_for('static', filename = 'images/'+pet.pet_pic)}}">
+        {% else %}
+            <td><img src="{{url_for('static', filename = 'images/default.png')}}" alt=""></td>
+        {% endif %}
+        {% if pet.poster.id == session.user %}
+            <button style="background-color:tomato" onclick="location.href='{{ url_for('delete_pet', pet_id = pet.id)}}'"> Delete Pet </button>
+        {% endif %}
+    </div> 
+    <div style="float:left; margin:10px;">
+        <h1 class="title">{{ pet["name"] }}</h1>
+        <p><b>Age: &nbsp;</b> {{pet["age"]}}</p>
+        <p><b>Bio: &nbsp;</b> {{pet["bio"]}}</p>
+    </div>
+
+    {% if pet.poster.id == session.user %}
+    <h2> Edit Pet </h2>
+    <!-- Error Message  -->
+    {% if message %}
+        <span style="background-color:tomato">
+        {{ message }}
+        <span>
+        <br>
+    {% endif %}
+    <!--  -->
+    <!-- Form for Editing the Pet -->
+    <form action="{{url_for('pet_details', pet_id = pet.id)}}" method="POST" style="padding:5px;">
+        {{ form.name.label }}: <br>
+        {{ form.name(value = pet.name) }} 
+        <br>
+        {{ form.age.label }}: <br>
+        {{ form.age(value = pet.age) }} 
+        <br>
+        {{ form.bio.label }}: <br>
+        {{ form.bio(value = pet.bio) }} 
+        <br>
+        {{ form.csrf_token }}
+        {{ form.submit }}
+    </form>
+    <!--  -->
+    {% endif %}
+
+</body>
+{% endblock %}
